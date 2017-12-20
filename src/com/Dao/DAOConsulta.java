@@ -1,5 +1,10 @@
 
+
+package com.Dao;
+
+import com.Beans.PrazoServico;
 import java.util.List;
+import javax.swing.JOptionPane;
 import org.tempuri.CResultado;
 import org.tempuri.CServico;
 
@@ -7,17 +12,17 @@ import org.tempuri.CServico;
  *
  * @author andre
  */
-public class Principal {
+public class DAOConsulta {
     
-    public static void main(String[] args) {
-        CResultado res = calcPrazo("40010","06835435","06803310");
+    public  void CalcularPrazo(PrazoServico p) {
+        CResultado res = calcPrazo("40010",p.getCepRemetente(),p.getCepDestino());
         List<CServico> lista = res.getServicos().getCServico();
         
             for(CServico c:lista){
                 if(c.getErro().equals("")){
-                    System.out.println("Prazo de entrega: "+c.getPrazoEntrega());
+                    p.setPrazo(c.getPrazoEntrega());
                 }else{
-                    System.out.println("Erro: "+ c.getMsgErro());
+                    JOptionPane.showMessageDialog(null, "Erro: " + c.getMsgErro());
                 }
             }
     }
